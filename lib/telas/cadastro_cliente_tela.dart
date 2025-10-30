@@ -17,6 +17,7 @@ class _CadastroClienteTelaState extends State<CadastroClienteTela> {
   final emailController = TextEditingController();
   final telefoneController = TextEditingController();
   final cpfController = TextEditingController();
+  final enderecoController = TextEditingController();
 
   @override
   void initState() {
@@ -84,7 +85,11 @@ class _CadastroClienteTelaState extends State<CadastroClienteTela> {
                   labelText: 'Nome',
                   border: OutlineInputBorder(),
                 ),
-                validator: (val) => val!.isEmpty ? 'Digite o nome' : null,
+                validator: (val) {
+                  if (val!.isEmpty) {
+                    return 'Digite o nome';
+                  }
+                },
               ),
               SizedBox(height: 16),
               TextFormField(
@@ -93,7 +98,13 @@ class _CadastroClienteTelaState extends State<CadastroClienteTela> {
                   labelText: 'Email',
                   border: OutlineInputBorder(),
                 ),
-                validator: (val) => val!.isEmpty ? 'Digite o email' : null,
+                validator: (val) {
+                  if (val!.isEmpty) {
+                    return 'Digite o E-mail!';
+                  } else if (!val.contains('@') || !val.contains('.com')) {
+                    return 'E-mail Inválido!';
+                  }
+                },
               ),
               SizedBox(height: 16),
               TextFormField(
@@ -102,7 +113,13 @@ class _CadastroClienteTelaState extends State<CadastroClienteTela> {
                   labelText: 'Telefone',
                   border: OutlineInputBorder(),
                 ),
-                validator: (val) => val!.isEmpty ? 'Digite o telefone' : null,
+                validator: (val) {
+                  if (val!.isEmpty) {
+                    return 'digite o telelforne!';
+                  } else if (val!.length < 10) {
+                    return 'Telefone Inválido!';
+                  }
+                },
               ),
               SizedBox(height: 16),
               TextFormField(
@@ -111,17 +128,61 @@ class _CadastroClienteTelaState extends State<CadastroClienteTela> {
                   labelText: 'CPF',
                   border: OutlineInputBorder(),
                 ),
-                validator: (val) => val!.isEmpty ? 'Digite o CPF' : null,
+                validator: (val) {
+                  if (val!.isEmpty) {
+                    return 'Digite o cpf!';
+                  } else if (val!.length < 11) {
+                    return 'CPF Inválido!';
+                  }
+                },
+              ),
+              SizedBox(height: 16),
+              TextFormField(
+                controller: enderecoController,
+                decoration: InputDecoration(
+                  labelText: 'Endereço',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (val) {
+                  if (val!.isEmpty) {
+                    return 'Digite o cpf';
+                  } else if (val!.length < 10) {
+                    return 'Endereço Inválido!';
+                  }
+                },
               ),
               SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: salvar,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                  foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                ),
-                child: Text('Salvar', style: TextStyle(fontSize: 18)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurple,
+                      foregroundColor: Colors.white,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 50,
+                        vertical: 15,
+                      ),
+                    ),
+                    child: Text('Cancelar', style: TextStyle(fontSize: 18)),
+                  ),
+                  SizedBox(width: 20),
+                  ElevatedButton(
+                    onPressed: salvar,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurple,
+                      foregroundColor: Colors.white,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 50,
+                        vertical: 15,
+                      ),
+                    ),
+                    child: Text('Salvar', style: TextStyle(fontSize: 18)),
+                  ),
+                ],
               ),
             ],
           ),
